@@ -18,8 +18,8 @@ const BookCard = ({
   author,
   genre,
   condition,
-  currentUserId,
-  bookOwnerId,
+  // currentUserId,
+  // bookOwnerId,
 }) => {
   const [open, setOpen] = useState(false); // State to control dialog visibility
   const [exchangeBook, setExchangeBook] = useState(""); // State for exchange book input
@@ -52,20 +52,21 @@ const BookCard = ({
     try {
       // Construct request payload
       const requestPayload = {
-        requesterId: currentUserId, // ID of the logged-in user
-        posterId: bookOwnerId, // ID of the book owner
-        requestedBook: title, // The book being requested
-        offeredBook: exchangeBook, // The book offered in exchange
-        accepted: false, // Default to not accepted
+        requestedBook: title, // The book being requested (required)
+        offeredBook: exchangeBook, // The book offered in exchange (required)
+        message: message || "", // Optional message
+        // ...(currentUserId && { requesterId: currentUserId }), // Include if not undefined
+        // ...(bookOwnerId && { posterId: bookOwnerId }), // Include if not undefined
       };
-      console.log("Current User ID:", currentUserId);
-      console.log("Book Owner ID:", bookOwnerId);
+
+      console.log("Payload:", requestPayload);
 
       // Make API call
       const response = await axios.post(
         "http://localhost:8080/exchange-requests",
         requestPayload
       );
+
       setResponseMessage("Exchange request sent successfully!");
       console.log("Server Response:", response.data);
 
@@ -73,7 +74,10 @@ const BookCard = ({
       setOpen(false); // Close dialog
     } catch (error) {
       console.error("Error sending exchange request:", error);
-      setResponseMessage("Failed to send request. Please try again.");
+      // Check for backend error messages
+      const errorMessage =
+        error.response?.data?.error || "Failed to send request. Please try again.";
+      setResponseMessage(errorMessage);
     } finally {
       setLoading(false); // Reset loading state
     }
@@ -115,6 +119,7 @@ const BookCard = ({
             onChange={(e) => setExchangeBook(e.target.value)}
             sx={{ marginTop: 2 }}
             placeholder="Enter the book you'd like to exchange for this"
+            required
           />
 
           {/* Input for additional message */}
@@ -133,7 +138,10 @@ const BookCard = ({
           {responseMessage && (
             <Typography
               variant="body2"
-              sx={{ marginTop: 2, color: responseMessage.includes("success") ? "green" : "red" }}
+              sx={{
+                marginTop: 2,
+                color: responseMessage.includes("success") ? "green" : "red",
+              }}
             >
               {responseMessage}
             </Typography>
