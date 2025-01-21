@@ -1,0 +1,32 @@
+GET http://localhost:8080/books
+
+
+###
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+    "title": "GVG",
+    "author": "VARIDHI",
+    "genre": "Fiction"
+}
+
+###
+GET http://localhost:8080/books/search?keyword=Gatsby
+
+###
+GET http://localhost:8080/books/exists/title/The Great Gatsby
+###
+GET http://localhost:8080/books/count/genre/Fiction
+###
+GET http://localhost:8080/books/genre/Fiction
+###
+PUT http://localhost:8080/books/2
+Content-Type: application/json
+
+{
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "genre": "Classic Fiction",
+  "condition": "Excellent"
+}

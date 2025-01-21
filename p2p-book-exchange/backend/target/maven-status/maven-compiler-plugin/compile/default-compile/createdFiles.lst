@@ -1,0 +1,4 @@
+com/example/virtuallibrary/model/Book.class
+com/example/virtuallibrary/repository/BookRepository.class
+com/example/virtuallibrary/controller/BookController.class
+com/example/virtuallibrary/VirtualLibraryApplication.class
