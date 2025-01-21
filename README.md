@@ -53,7 +53,7 @@ All POST,GET requests update the database.
 
 Due to scarcity of time, I was unable to debug authentication and implement Jwt Token and Otp based login.
 
-Rough UI attached in the email :>
+Rough UI (Lofi prototype) attached in the email :>
 
 Future extentions: 
 1. Book recommendations through AI
