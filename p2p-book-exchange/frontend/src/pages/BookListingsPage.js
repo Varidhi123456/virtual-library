@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BookCard from "../components/BookCard";
+import Navbar from "../components/Navbar";
 
 const BookListingsPage = () => {
   const [books, setBooks] = useState([]); // State to store books
@@ -23,15 +24,19 @@ const BookListingsPage = () => {
 
   return (
     <div>
+      <Navbar/>
       <h2>Book Listings</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>} {/* Show error message if any */}
-      {books.length > 0 ? (
-        books.map((book, index) => (
-          <BookCard key={index} {...book} />
-        ))
-      ) : (
-        <p>No books available.</p>
-      )}
+      {books.map((book) => (
+        <BookCard
+          key={book.id}
+          title={book.title}
+          author={book.author}
+          genre={book.genre}
+          condition={book.condition}
+          currentUserId={currentUserId} // Pass logged-in user's ID
+          bookOwnerId={book.ownerId} // Pass the owner of the book
+        />
+      ))}
     </div>
   );
 };

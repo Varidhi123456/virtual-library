@@ -1,47 +1,60 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UserProfileCard from "../components/UserProfileCard";
 
 const UserProfile = ({ currentUserId }) => {
-  const [users, setUsers] = useState([]); // State to hold users
-  const [error, setError] = useState(null); // State to handle errors
-  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [incomingRequests, setIncomingRequests] = useState([]);
+  const [outgoingRequests, setOutgoingRequests] = useState([]);
 
-  // Fetch users from the backend API
+  // Fetch exchange requests
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchRequests = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/users");
-        setUsers(response.data); // Set the fetched users
-      } catch (err) {
-        console.error("Error fetching users:", err);
-        setError("Failed to load users. Please try again later.");
-      } finally {
-        setLoading(false); // Stop loading spinner
+        const response = await axios.get(
+          `http://localhost:8080/exchange-requests/user/${currentUserId}`
+        );
+        const requests = response.data;
+
+        setIncomingRequests(
+          requests.filter((req) => req.posterId === currentUserId)
+        );
+        setOutgoingRequests(
+          requests.filter((req) => req.requesterId === currentUserId)
+        );
+      } catch (error) {
+        console.error("Error fetching exchange requests:", error);
       }
     };
 
-    fetchUsers();
-  }, []);
+    fetchRequests();
+  }, [currentUserId]);
 
   return (
     <div>
-      <h2>User Profiles</h2>
-      {loading && <p>Loading users...</p>} {/* Show loading state */}
-      {error && <p style={{ color: "red" }}>{error}</p>} {/* Show error if any */}
-      {!loading && users.length > 0 ? (
-        users.map((user) => (
-          <UserProfileCard
-            key={user.id}
-            userId={user.id}
-            name={user.username}
-            email={user.email || "No bio available"} // Optional bio fallback
-            booksShared={user.booksShared || 0} // Default booksShared value
-            currentUserId={currentUserId} // Logged-in user ID
-          />
+      <h3>Incoming Requests</h3>
+      {incomingRequests.length > 0 ? (
+        incomingRequests.map((req) => (
+          <div key={req._id}>
+            <p>
+              {req.requesterId} wants to exchange {req.offeredBook} for{" "}
+              {req.requestedBook}
+            </p>
+          </div>
         ))
       ) : (
-        !loading && <p>No users found.</p> // Show if no users exist
+        <p>No incoming requests.</p>
+      )}
+
+      <h3>Outgoing Requests</h3>
+      {outgoingRequests.length > 0 ? (
+        outgoingRequests.map((req) => (
+          <div key={req._id}>
+            <p>
+              You requested {req.requestedBook} from {req.posterId}
+            </p>
+          </div>
+        ))
+      ) : (
+        <p>No outgoing requests.</p>
       )}
     </div>
   );
