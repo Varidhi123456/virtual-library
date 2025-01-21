@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Button } from "@mui/material";
 
 const UserProfileCard = ({ name, bio, booksShared }) => {
   return (
@@ -8,6 +8,15 @@ const UserProfileCard = ({ name, bio, booksShared }) => {
         <Typography variant="h6">{name}</Typography>
         <Typography variant="body2">{bio}</Typography>
         <Typography variant="caption">Books Shared: {booksShared}</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small" 
+          sx={{ marginTop: -12, left: 5 }}
+        >
+          Follow
+        </Button>
+
       </CardContent>
     </Card>
   );
