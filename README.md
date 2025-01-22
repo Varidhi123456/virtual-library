@@ -49,7 +49,7 @@ cd frontend
 npm install
 npm start
 
-All POST,GET requests update the database.
+All POST,GET requests update the database.(Can test using the restclient.http file (path: backend/src/main/resources/static/RestClient.http))
 
 Due to scarcity of time, I was unable to debug authentication and implement Jwt Token and Otp based login.
 

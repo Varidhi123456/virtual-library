@@ -45,11 +45,5 @@ GET http://localhost:8080/books/count/varidhig
 Content-Type: application/json
 
 ###
-PUT http://localhost:8080/exchange-requests({})
-Content-Type: application/json 
-{
-  "requesterusername": "john_doe",
-  "requestedBook": "Book Title",
-  "offeredBook": "Another Book",
-  "accepted": false
-}
+GET http://localhost:8080/exchange-requests/user/coal
+Content-Type: application/json
