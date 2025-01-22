@@ -18,13 +18,14 @@ const BookCard = ({
   author,
   genre,
   condition,
-  // currentUserId,
+  //currentuser,
   // bookOwnerId,
 }) => {
   const [open, setOpen] = useState(false); // State to control dialog visibility
   const [exchangeBook, setExchangeBook] = useState(""); // State for exchange book input
   const [message, setMessage] = useState(""); // State for user message
   const [responseMessage, setResponseMessage] = useState(""); // Feedback for user
+  const [requesterusername, setRequesterUsername] = useState("");
   const [loading, setLoading] = useState(false); // State to indicate loading
 
   // Handle dialog open and close
@@ -55,7 +56,7 @@ const BookCard = ({
         requestedBook: title, // The book being requested (required)
         offeredBook: exchangeBook, // The book offered in exchange (required)
         message: message || "", // Optional message
-        // ...(currentUserId && { requesterId: currentUserId }), // Include if not undefined
+        requesterusername: requesterusername 
         // ...(bookOwnerId && { posterId: bookOwnerId }), // Include if not undefined
       };
 
@@ -119,6 +120,17 @@ const BookCard = ({
             onChange={(e) => setExchangeBook(e.target.value)}
             sx={{ marginTop: 2 }}
             placeholder="Enter the book you'd like to exchange for this"
+            required
+          />
+
+          {/* Input for requester's username */}
+          <TextField
+            fullWidth
+            label="Your Username (Requester)"
+            value={requesterusername}
+            onChange={(e) => setRequesterUsername(e.target.value)}
+            sx={{ marginTop: 2 }}
+            placeholder="Enter your username"
             required
           />
 

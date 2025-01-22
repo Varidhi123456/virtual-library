@@ -7,10 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ExchangeRequest {
     @Id
     private String id;
-    private String requesterId; // ID of the user making the request
-    private String posterId; // ID of the user owning the book
+    //private String posterId; // ID of the user owning the book
     private String requestedBook; // Book being requested
     private String offeredBook; // Book offered in exchange
+    private String requesterusername; // username of the user making the request
     private boolean accepted; // Whether the request is accepted or not
 
     // Getters and Setters
@@ -22,21 +22,13 @@ public class ExchangeRequest {
         this.id = id;
     }
 
-    public String getRequesterId() {
-        return requesterId;
-    }
+    // public String getPosterId() {
+    //     return posterId;
+    // }
 
-    public void setRequesterId(String requesterId) {
-        this.requesterId = requesterId;
-    }
-
-    public String getPosterId() {
-        return posterId;
-    }
-
-    public void setPosterId(String posterId) {
-        this.posterId = posterId;
-    }
+    // public void setPosterId(String posterId) {
+    //     this.posterId = posterId;
+    // }
 
     public String getRequestedBook() {
         return requestedBook;
@@ -52,6 +44,14 @@ public class ExchangeRequest {
 
     public void setOfferedBook(String offeredBook) {
         this.offeredBook = offeredBook;
+    }
+
+    public String getRequesterusername() {
+        return requesterusername;
+    }
+
+    public void setRequesterusername(String requesterusername) {
+        this.requesterusername = requesterusername;
     }
 
     public boolean isAccepted() {

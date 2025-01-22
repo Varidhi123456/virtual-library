@@ -21,8 +21,7 @@ public class ExchangeRequestController {
     public ResponseEntity<ExchangeRequest> createExchangeRequest(@RequestBody ExchangeRequest request) {
         System.out.println("Received Request Payload: " + request);
 
-        if (request.getPosterId() == null || request.getRequesterId() == null ||
-                request.getRequestedBook() == null || request.getOfferedBook() == null) {
+        if (request.getRequesterusername() == null|| request.getRequestedBook() == null || request.getOfferedBook() == null) {
             System.err.println("Error: Missing required fields in the request payload");
             return ResponseEntity.badRequest().body(null);
         }
@@ -31,10 +30,10 @@ public class ExchangeRequestController {
         return ResponseEntity.ok(savedRequest);
     }
 
-    // Get all exchange requests for a specific user
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ExchangeRequest>> getRequestsForUser(@PathVariable String userId) {
-        List<ExchangeRequest> requests = exchangeRequestRepository.findByPosterIdOrRequesterId(userId, userId);
+    //Get all exchange requests for a specific user
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<ExchangeRequest>> getRequestsForUser(@PathVariable String username) {
+        List<ExchangeRequest> requests = exchangeRequestRepository.findByRequesterusername(username);
         return ResponseEntity.ok(requests);
     }
 

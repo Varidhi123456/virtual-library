@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ExchangeRequestRepository extends MongoRepository<ExchangeRequest, String> {
-    List<ExchangeRequest> findByPosterId(String posterId);
-    List<ExchangeRequest> findByRequesterId(String requesterId);
-    List<ExchangeRequest> findByPosterIdOrRequesterId(String posterId, String requesterId);
+    // List<ExchangeRequest> findByPosterId(String posterId);
+    List<ExchangeRequest> findByRequesterusername(String requesterusername);
+//     List<ExchangeRequest> findByPosterIdOrRequesterId(String posterId, String requesterId);
 }

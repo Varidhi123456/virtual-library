@@ -10,7 +10,8 @@ public class Book {
     private String title;
     private String author;
     private String genre;
-    private String condition; // Ensure this field exists
+    private String condition; 
+    private String username;
 
     // Getters and Setters
     public String getId() {
@@ -51,5 +52,13 @@ public class Book {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

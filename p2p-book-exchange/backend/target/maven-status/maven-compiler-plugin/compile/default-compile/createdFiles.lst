@@ -1,4 +1,11 @@
 com/example/virtuallibrary/model/Book.class
-com/example/virtuallibrary/repository/BookRepository.class
+com/example/virtuallibrary/model/User.class
 com/example/virtuallibrary/controller/BookController.class
+com/example/virtuallibrary/controller/UserController.class
+com/example/virtuallibrary/service/UserService.class
+com/example/virtuallibrary/repository/BookRepository.class
+com/example/virtuallibrary/controller/ExchangeRequestController.class
+com/example/virtuallibrary/repository/UserRepository.class
+com/example/virtuallibrary/repository/ExchangeRequestRepository.class
+com/example/virtuallibrary/model/ExchangeRequest.class
 com/example/virtuallibrary/VirtualLibraryApplication.class

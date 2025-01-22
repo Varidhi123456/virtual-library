@@ -53,6 +53,13 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
+    // Get the count of books shared by a user (by username)
+    @GetMapping("/count/{username}")
+    public ResponseEntity<Long> getBookCountByUsername(@PathVariable String username) {
+        long count = bookRepository.countByUsername(username);
+        return ResponseEntity.ok(count);
+    }
+
     // Update book details
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book updatedBook) {

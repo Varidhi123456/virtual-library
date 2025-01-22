@@ -18,6 +18,9 @@ public interface BookRepository extends MongoRepository<Book, String> {
     // Find books by title
     List<Book> findByTitle(String title);
 
+    // Query method for counting books
+    long countByUsername(String username); 
+
     // Count books by genre
     long countByGenre(String genre);
 

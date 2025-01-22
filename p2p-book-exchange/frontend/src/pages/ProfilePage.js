@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 const ProfilePage = () => {
   const [user, setUser] = useState({ username: "", email: "", profileIcon: "" });
+  const [bookCount, setBookCount] = useState(0); // State to store the count of books
   const [incomingRequests, setIncomingRequests] = useState([]);
   const [outgoingRequests, setOutgoingRequests] = useState([]);
   const [error, setError] = useState(null);
@@ -14,7 +15,7 @@ const ProfilePage = () => {
     const fetchUserData = async () => {
       try {
         // Replace with your API endpoints
-        const userResponse = await axios.get("http://localhost:8080/user");
+        const userResponse = await axios.get("http://localhost:8080/users");
         const incomingResponse = await axios.get(
           "http://localhost:8080/exchange-requests/incoming"
         );
@@ -34,9 +35,28 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
+  // Fetch book count for the user
+  useEffect(() => {
+    const fetchBookCount = async () => {
+      if (user.username) {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/books/count/${user.username}`
+          );
+          setBookCount(response.data);
+        } catch (err) {
+          console.error("Error fetching book count:", err);
+          setError("Unable to fetch the number of books shared.");
+        }
+      }
+    };
+
+    fetchBookCount();
+  }, [user.username]);
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <Navbar/>
+      <Navbar />
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
         {/* User Information */}
         <div className="flex items-center mb-8">
@@ -47,12 +67,22 @@ const ProfilePage = () => {
               className="w-16 h-16 rounded-full border-2 border-blue-600 mr-4"
             />
           ) : (
-            <FaUserCircle size={64} className="text-blue-600 mr-4" />// Profile icon fallback
+            <FaUserCircle size={64} className="text-blue-600 mr-4" /> // Profile icon fallback
           )}
           <div>
             <h2 className="text-xl font-bold">{user.username || "Username"}</h2>
             <p className="text-gray-600">{user.email || "user@example.com"}</p>
           </div>
+        </div>
+
+        {/* Display Book Count */}
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold mb-4">Books Shared</h3>
+          <p className="text-gray-800">
+            {user.username
+              ? `You have shared ${bookCount} book(s).`
+              : "Loading book count..."}
+          </p>
         </div>
 
         {/* Incoming Exchange Requests */}
